@@ -21,27 +21,30 @@ namespace Beatbot
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             log.LogInformation(requestBody);
             dynamic data = JsonConvert.DeserializeObject(requestBody);
-            Event event = data?.event;
+            Event @event = data?.@event;
+            string token = data?.token;
             Response response = new Response();
-            response.event = event;
+            response.Event = @event;
+            response.Token = token;
 
             return new OkObjectResult(response);
+
         }
     }
 
     public class Response
     {
-        public Event event { get; set; }
-}
+        public string Token { get; set; }
+        public Event Event { get; set; }
+    }
 
     public class Event {
-        public Message message { get; set; }
+        public Message Message { get; set; }
     
-
     }
 
     public class Message {
-        public string text { get; set; }
+        public string Text { get; set; }
 
     }
 }
