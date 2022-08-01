@@ -23,9 +23,15 @@ namespace Beatbot
             dynamic data = JsonConvert.DeserializeObject(requestBody);
             Event @event = JsonConvert.DeserializeObject<Event>(JsonConvert.SerializeObject(data?.@event));
             string token = data?.token;
+            string text = data?.@event?.message?.text;
             Response response = new Response();
             response.Event = @event;
             response.Token = token;
+            if (text != null)
+            {
+                log.LogInformation($"Found text: {text}");
+                response.Event.Message.Text = text;
+            }
 
             return new OkObjectResult(response);
 
