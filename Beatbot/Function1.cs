@@ -1,4 +1,5 @@
 using System;
+using System.Text.RegularExpressions;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -22,15 +23,21 @@ namespace Beatbot
             log.LogInformation(requestBody);
             dynamic data = JsonConvert.DeserializeObject(requestBody);
             Event @event = JsonConvert.DeserializeObject<Event>(JsonConvert.SerializeObject(data?.@event));
+            Message message = new Message();
+            @event.Message = message;
             string token = data?.token;
-            string text = data?.@event?.message?.text;
+            string text = data?.@event?.text;
             Response response = new Response();
             response.Event = @event;
             response.Token = token;
             if (text != null)
             {
                 log.LogInformation($"Found text: {text}");
-                response.Event.Message.Text = text;
+                @event.Message.Text = text;
+            }
+            if (Regex.Match(text, "^((?:https?:)?\\/\\/)?((?:www|m)\\.)?((?:youtube(-nocookie)?\\.com|youtu.be))(\\/(?:[\\w\\-]+\\?v=|embed\\/|v\\/)?)([\\w\\-]+)(\\S+)?$").Success)
+            {
+                log.LogInformation($"Youtube link found: {text})");
             }
 
             return new OkObjectResult(response);
