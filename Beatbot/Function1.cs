@@ -21,7 +21,7 @@ namespace Beatbot
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             log.LogInformation(requestBody);
             dynamic data = JsonConvert.DeserializeObject(requestBody);
-            Event @event = data?.@event;
+            Event @event = JsonConvert.DeserializeObject<Event>(JsonConvert.SerializeObject(data?.@event));
             string token = data?.token;
             Response response = new Response();
             response.Event = @event;
