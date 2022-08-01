@@ -34,11 +34,12 @@ namespace Beatbot
             {
                 log.LogInformation($"Found text: {text}");
                 @event.Message.Text = text;
+                if (Regex.Match(text, "^((?:https?:)?\\/\\/)?((?:www|m)\\.)?((?:youtube(-nocookie)?\\.com|youtu.be))(\\/(?:[\\w\\-]+\\?v=|embed\\/|v\\/)?)([\\w\\-]+)(\\S+)?$").Success)
+                {
+                    log.LogInformation($"Youtube link found: {text})");
+                }
             }
-            if (Regex.Match(text, "^((?:https?:)?\\/\\/)?((?:www|m)\\.)?((?:youtube(-nocookie)?\\.com|youtu.be))(\\/(?:[\\w\\-]+\\?v=|embed\\/|v\\/)?)([\\w\\-]+)(\\S+)?$").Success)
-            {
-                log.LogInformation($"Youtube link found: {text})");
-            }
+
 
             return new OkObjectResult(response);
 
