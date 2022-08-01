@@ -19,6 +19,7 @@ namespace Beatbot
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+            log.LogInformation(requestBody);
             dynamic data = JsonConvert.DeserializeObject(requestBody);
             string challenge = data?.challenge;
             Response response = new Response();
