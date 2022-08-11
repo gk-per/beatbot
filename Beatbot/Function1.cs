@@ -20,7 +20,7 @@ namespace Beatbot
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            log.LogInformation(requestBody);
+           // log.LogInformation(requestBody);
             dynamic data = JsonConvert.DeserializeObject(requestBody);
             Event @event = JsonConvert.DeserializeObject<Event>(JsonConvert.SerializeObject(data?.@event));
             Message message = new Message();
@@ -33,17 +33,18 @@ namespace Beatbot
             if (text != null)
             {
                 log.LogInformation($"Found text: {text}");
-                if (text.StartsWith("<") && text.EndsWith(">"))
-                {
-                    text = text.Remove(0, 1);
-                    text = text.Remove(text.Length - 1, 1);
-                    log.LogInformation($"New text after remove <>: {text}");
-                }
-                @event.Message.Text = text.Remove(0,1);
-                if (Regex.Match(text, "^((?:https?:)?\\/\\/)?((?:www|m)\\.)?((?:youtube(-nocookie)?\\.com|youtu.be))(\\/(?:[\\w\\-]+\\?v=|embed\\/|v\\/)?)([\\w\\-]+)(\\S+)?$").Success)
-                {
-                    log.LogInformation($"Youtube link found: {text})");
-                }
+
+                //if (text.StartsWith("<") && text.EndsWith(">"))
+                //{
+                //    text = text.Remove(0, 1);
+                //    text = text.Remove(text.Length - 1, 1);
+                //    log.LogInformation($"New text after remove <>: {text}");
+                //}
+                //@event.Message.Text = text.Remove(0,1);
+                //if (Regex.Match(text, "^((?:https?:)?\\/\\/)?((?:www|m)\\.)?((?:youtube(-nocookie)?\\.com|youtu.be))(\\/(?:[\\w\\-]+\\?v=|embed\\/|v\\/)?)([\\w\\-]+)(\\S+)?$").Success)
+                //{
+                //    log.LogInformation($"Youtube link found: {text}");
+                //}
             }
 
 
