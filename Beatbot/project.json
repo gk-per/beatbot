@@ -1,0 +1,9 @@
+﻿{
+  "frameworks": {
+    "net60": {
+      "dependencies": {
+        "Azure.AI.TextAnalytics": "5.1.1"
+      }
+    }
+  }
+}
